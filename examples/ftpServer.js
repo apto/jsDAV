@@ -6,19 +6,25 @@
  */
 
 var jsDAV = require("./../lib/jsdav");
+var FtpTree  = require("./../lib/DAV/backends/ftp/tree");
 jsDAV.debugMode = true;
 
 function startServer() {
-  jsDAV.createServer({
-    type: "ftp",
+  console.log('#### FtpTree = ', FtpTree);
+  var tree = FtpTree.new({
     ftp: {
       host: process.argv[2],
       user: process.argv[3],
       pass: process.argv[4],
       path: process.argv[5]
     }
+  });
+
+  jsDAV.createServer({
+    tree: tree
   }, 8000);
 }
+
 
 startServer();
 

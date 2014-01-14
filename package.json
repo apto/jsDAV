@@ -20,7 +20,7 @@
         "xpath": "~0.0.5"
     },
     "optionalDependencies": {
-        "jsftp": "*",
+        "jsftp": "~0.5.4",
         "node-sftp": "0.1.1",
         "dbox": "~0.5.6",
         "redis": "~0.8.2",
