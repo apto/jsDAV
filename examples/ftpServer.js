@@ -10,7 +10,6 @@ var FtpTree  = require("./../lib/DAV/backends/ftp/tree");
 jsDAV.debugMode = true;
 
 function startServer() {
-  console.log('#### FtpTree = ', FtpTree);
   var tree = FtpTree.new({
     ftp: {
       host: process.argv[2],
