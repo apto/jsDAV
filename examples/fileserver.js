@@ -15,7 +15,7 @@ var jsDAV_Handler = require("./../lib/DAV/handler");
 
 var oldInvoke = jsDAV_Handler.prototype.invoke;
 jsDAV_Handler.prototype.invoke = function () {
-  oldInvoke.call(this, arguments);
+  oldInvoke.apply(this, arguments);
 };
 
 var handler = function (server, request, response) {
