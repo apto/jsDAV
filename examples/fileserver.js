@@ -13,7 +13,13 @@ var jsDAV_Locks_Backend_FS = require("./../lib/DAV/plugins/locks/fs");
 
 var jsDAV_Handler = require("./../lib/DAV/handler");
 
+var oldInvoke = jsDAV_Handler.prototype.invoke;
+jsDAV_Handler.prototype.invoke = function () {
+  oldInvoke.call(this, arguments);
+};
+
 var handler = function (server, request, response) {
+  //We do our stuff
   new jsDAV_Handler(server, request, response);
 };
 
