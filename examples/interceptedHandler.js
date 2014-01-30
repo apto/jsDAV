@@ -38,19 +38,21 @@ module.exports = function (server, req, res) {
 
     interceptedMethods[methodName]["originalMethod"] = jsDAV_Handler.prototype[httpMethod];
 
-    jsDAV_Handler.prototype[httpMethod] = function () {
-      if (interceptedMethods[methodName]["replaceMethod"]) {
-        //'arguments' are not really used by the original handler methods
-        //But, we are passing this just in case for sending objects across the call chain
-        interceptedMethods[methodName]["replaceMethod"](arguments);
-      }
-      else {
-        if (interceptedMethods[methodName]["beforeMethod"]) {
-          interceptedMethods[methodName]["beforeMethod"](arguments);
+    if (interceptedMethods[methodName]["originalMethod"]) {
+      jsDAV_Handler.prototype[httpMethod] = function () {
+        if (interceptedMethods[methodName]["replaceMethod"]) {
+          //'arguments' are not really used by the original handler methods
+          //But, we are passing this just in case for sending objects across the call chain
+          interceptedMethods[methodName]["replaceMethod"](arguments);
         }
-        interceptedMethods[methodName]["originalMethod"].apply(this, arguments);
-        if (interceptedMethods[methodName]["afterMethod"]) {
-          interceptedMethods[methodName]["afterMethod"](arguments);
+        else {
+          if (interceptedMethods[methodName]["beforeMethod"]) {
+            interceptedMethods[methodName]["beforeMethod"](arguments);
+          }
+          interceptedMethods[methodName]["originalMethod"].apply(this, arguments);
+          if (interceptedMethods[methodName]["afterMethod"]) {
+            interceptedMethods[methodName]["afterMethod"](arguments);
+          }
         }
       }
     }
